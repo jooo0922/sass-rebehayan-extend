@@ -7,8 +7,55 @@
 
 요렇게 생긴 구조를 이용해서
 extend 하려는 속성값들을 안에 넣어서 정리해둬야 함.
+
+또는, 일반적인 클래스명을 지정한 뒤에 해당 클래스에 정리한 스타일시트도 @extend 명령어로 사용할 수 있음!
+
+-> 이렇게 만들어두면 다른 스타일시트에서 계속 가져다가 재사용할 수 있음.
+
+주!) 이전에 사용했던 mixin - include 과는 조금 다름.
+하단에 동일한 이름의 mixin 을 만든 뒤, include 했기 때문에
+둘이 어떻게 다른지 확연하게 보일 것임...
+
+mixin은 매개변수를 통해 호출할 때마다 원하는 옵션을 달리하여 넣어줄 수 있다는 점이 다름!
 */
+
+/*
+근데 가급적이면 @extend는 사용하지 말고,
+mixin을 사용할 것을 권장하고 있음.
+
+왜냐면, 저렇게 일반 클래스를 @extend로 가져와서 사용하면
+css 파일에서 ,(and) 구분자로 컴파일이 되는데,
+저게 잘못 사용하면 구조가 이상해질 수 있기 때문에
+가급적 저런 패턴으로는 사용하지 말고, @extend 대신 mixin을 사용할 것을 권장함.
+*/
+
 %name {
   font-size: 14px;
   color: blue;
+}
+
+.fs20 {
+  font-size: 20px;
+}
+
+@mixin name($bold, $color) {
+  font-weight: $bold;
+  background: $color;
+}
+
+.a {
+  @extend %name; // 이렇게 하면 extend가 호출이 된 것.
+  @include name(
+    bold,
+    grey
+  ); // extend와 달리 매개변수로 원하는 옵션을 넣어서 호출 가능한 mixin
+}
+
+.b {
+  // 일반적인 클래스명으로 만든 스타일시트도 @extend 명령어로 가져올 수 있음!
+  @extend .fs20;
+}
+
+.c {
+  @extend %name;
 }
