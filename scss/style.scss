@@ -59,3 +59,46 @@ css 파일에서 ,(and) 구분자로 컴파일이 되는데,
 .c {
   @extend %name;
 }
+
+%m0auto {
+  // 요즘에 많이 사용하는 스타일 패턴
+  // 가운데는 비쥬얼로 꽉 차있게 하면서 양옆에 자동으로 margin값을 계산하여 전체적으로 가운데 정렬 해줌.
+  // 이런 스타일 패턴을 반복해서 사용할 때가 꽤 있음 -> 이럴 때는 @extend를 예외적으로 사용해줘도 괜찮을 것 같음.
+  // 왜냐면, 컴파일된 css에서 보면 .visual div, .main div, .footer div 를 묶어서 %m0auto 의 속성값을 지정해주고 있기 때문!
+  // 이럴 때는 margin값만 수정해주면 세 영역의 너비가 알아서 변경되기 때문!
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.visual {
+  background: pink;
+  height: 300px;
+
+  div {
+    @extend %m0auto;
+    background: rgba(0, 0, 0, 0.5);
+    height: 300px;
+  }
+}
+
+.main {
+  background: purple;
+  height: 500px;
+
+  div {
+    @extend %m0auto;
+    background: rgba(0, 0, 0, 0.5);
+    height: 500px;
+  }
+}
+
+.footer {
+  background: violet;
+  height: 150px;
+
+  div {
+    @extend %m0auto;
+    background: rgba(0, 0, 0, 0.5);
+    height: 150px;
+  }
+}
